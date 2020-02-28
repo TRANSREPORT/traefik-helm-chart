@@ -12,7 +12,7 @@ deployment:
 
 additional:
   checkNewVersion: true
-  sendAnonymousUsage: true
+  sendAnonymousUsage: false
 
 rollingUpdate:
   maxUnavailable: 1
@@ -65,7 +65,8 @@ ports:
 service:
   type: LoadBalancer
   # Additional annotations (e.g. for cloud provider specific config)
-  annotations: {}
+#  annotations: {}
+#    service.beta.kubernetes.io/aws-load-balancer-internal: "0.0.0.0/0"
   # Additional entries here will be added to the service spec. Cannot contains
   # type, selector or ports entries.
   spec: {}
@@ -75,7 +76,7 @@ service:
 
 dashboard:
   # Enable the dashboard on Traefik
-  enable: true
+  enable: false
 
   # Expose the dashboard and api through an ingress route at /dashboard
   # and /api This is not secure and SHOULD NOT be enabled on production
@@ -85,13 +86,13 @@ dashboard:
 logs:
   loglevel: WARN
 #
-resources: {}
-  # requests:
-  #   cpu: "100m"
-  #   memory: "50Mi"
-  # limits:
-  #   cpu: "300m"
-  #   memory: "150Mi"
+resources:
+ requests:
+   cpu: "200m"
+   memory: "100Mi"
+ limits:
+   cpu: "300m"
+   memory: "150Mi"
 affinity: {}
 nodeSelector: {}
 tolerations: []
